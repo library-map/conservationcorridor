@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        #map {
+            width: 936px;
+            height: 858px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="data/SearchLayerHidden_1.js"></script>
+        <script src="data/Science_2.js"></script>
+        <script src="data/Technical_3.js"></script>
+        <script src="data/Practice_4.js"></script>
+        <script src="data/Policy_5.js"></script>
+        <script src="data/Community_6.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:3
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 3,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_SearchLayerHidden_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['qc_id'] !== null ? autolinker.link(feature.properties['qc_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['x'] !== null ? autolinker.link(feature.properties['x'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['y'] !== null ? autolinker.link(feature.properties['y'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['digest link'] !== null ? autolinker.link(feature.properties['digest link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link link'] !== null ? autolinker.link(feature.properties['link link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link'] !== null ? autolinker.link(feature.properties['link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['digest'] !== null ? autolinker.link(feature.properties['digest'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['authors'] !== null ? autolinker.link(feature.properties['authors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['year'] !== null ? autolinker.link(feature.properties['year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['journal'] !== null ? autolinker.link(feature.properties['journal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['theme'] !== null ? autolinker.link(feature.properties['theme'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geotag'] !== null ? autolinker.link(feature.properties['geotag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitude'] !== null ? autolinker.link(feature.properties['latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitude'] !== null ? autolinker.link(feature.properties['longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['additional location tags'] !== null ? autolinker.link(feature.properties['additional location tags'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['keywords'] !== null ? autolinker.link(feature.properties['keywords'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['search terms'] !== null ? autolinker.link(feature.properties['search terms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['comma'] !== null ? autolinker.link(feature.properties['comma'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SearchLayerHidden_1_0() {
+            return {
+                pane: 'pane_SearchLayerHidden_1',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(134,206,98,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_SearchLayerHidden_1');
+        map.getPane('pane_SearchLayerHidden_1').style.zIndex = 401;
+        map.getPane('pane_SearchLayerHidden_1').style['mix-blend-mode'] = 'normal';
+        var layer_SearchLayerHidden_1 = new L.geoJson(json_SearchLayerHidden_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_SearchLayerHidden_1',
+            layerName: 'layer_SearchLayerHidden_1',
+            pane: 'pane_SearchLayerHidden_1',
+            onEachFeature: pop_SearchLayerHidden_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_SearchLayerHidden_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_SearchLayerHidden_1);
+        function pop_Science_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Link</th>\
+                        <td>' + (feature.properties['Link'] !== null ? autolinker.link(feature.properties['Link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Digest</th>\
+                        <td>' + (feature.properties['Digest'] !== null ? autolinker.link(feature.properties['Digest'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Authors</th>\
+                        <td>' + (feature.properties['Authors'] !== null ? autolinker.link(feature.properties['Authors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Years</th>\
+                        <td>' + (feature.properties['Years'] !== null ? autolinker.link(feature.properties['Years'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Journal</th>\
+                        <td>' + (feature.properties['Journal'] !== null ? autolinker.link(feature.properties['Journal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Theme</th>\
+                        <td>' + (feature.properties['Theme'] !== null ? autolinker.link(feature.properties['Theme'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Geotag</th>\
+                        <td>' + (feature.properties['Geotag'] !== null ? autolinker.link(feature.properties['Geotag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Search Terms</th>\
+                        <td>' + (feature.properties['Search Terms'] !== null ? autolinker.link(feature.properties['Search Terms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Science_2_0() {
+            return {
+                pane: 'pane_Science_2',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,132,26,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Science_2');
+        map.getPane('pane_Science_2').style.zIndex = 402;
+        map.getPane('pane_Science_2').style['mix-blend-mode'] = 'normal';
+        var layer_Science_2 = new L.geoJson(json_Science_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Science_2',
+            layerName: 'layer_Science_2',
+            pane: 'pane_Science_2',
+            onEachFeature: pop_Science_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Science_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Science_2);
+        map.addLayer(layer_Science_2);
+        function pop_Technical_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Link</th>\
+                        <td>' + (feature.properties['Link'] !== null ? autolinker.link(feature.properties['Link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Digest</th>\
+                        <td>' + (feature.properties['Digest'] !== null ? autolinker.link(feature.properties['Digest'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Authors</th>\
+                        <td>' + (feature.properties['Authors'] !== null ? autolinker.link(feature.properties['Authors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Journal</th>\
+                        <td>' + (feature.properties['Journal'] !== null ? autolinker.link(feature.properties['Journal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Theme</th>\
+                        <td>' + (feature.properties['Theme'] !== null ? autolinker.link(feature.properties['Theme'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Geotag</th>\
+                        <td>' + (feature.properties['Geotag'] !== null ? autolinker.link(feature.properties['Geotag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Search Terms</th>\
+                        <td>' + (feature.properties['Search Terms'] !== null ? autolinker.link(feature.properties['Search Terms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Technical_3_0() {
+            return {
+                pane: 'pane_Technical_3',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,1,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Technical_3');
+        map.getPane('pane_Technical_3').style.zIndex = 403;
+        map.getPane('pane_Technical_3').style['mix-blend-mode'] = 'normal';
+        var layer_Technical_3 = new L.geoJson(json_Technical_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Technical_3',
+            layerName: 'layer_Technical_3',
+            pane: 'pane_Technical_3',
+            onEachFeature: pop_Technical_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Technical_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Technical_3);
+        map.addLayer(layer_Technical_3);
+        function pop_Practice_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Link</th>\
+                        <td>' + (feature.properties['Link'] !== null ? autolinker.link(feature.properties['Link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Digest</th>\
+                        <td>' + (feature.properties['Digest'] !== null ? autolinker.link(feature.properties['Digest'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Authors</th>\
+                        <td>' + (feature.properties['Authors'] !== null ? autolinker.link(feature.properties['Authors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Journal</th>\
+                        <td>' + (feature.properties['Journal'] !== null ? autolinker.link(feature.properties['Journal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Theme</th>\
+                        <td>' + (feature.properties['Theme'] !== null ? autolinker.link(feature.properties['Theme'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Geotag</th>\
+                        <td>' + (feature.properties['Geotag'] !== null ? autolinker.link(feature.properties['Geotag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Search Terms</th>\
+                        <td>' + (feature.properties['Search Terms'] !== null ? autolinker.link(feature.properties['Search Terms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Practice_4_0() {
+            return {
+                pane: 'pane_Practice_4',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,162,1,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Practice_4');
+        map.getPane('pane_Practice_4').style.zIndex = 404;
+        map.getPane('pane_Practice_4').style['mix-blend-mode'] = 'normal';
+        var layer_Practice_4 = new L.geoJson(json_Practice_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Practice_4',
+            layerName: 'layer_Practice_4',
+            pane: 'pane_Practice_4',
+            onEachFeature: pop_Practice_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Practice_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Practice_4);
+        map.addLayer(layer_Practice_4);
+        function pop_Policy_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Link</th>\
+                        <td>' + (feature.properties['Link'] !== null ? autolinker.link(feature.properties['Link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Digest</th>\
+                        <td>' + (feature.properties['Digest'] !== null ? autolinker.link(feature.properties['Digest'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Authors</th>\
+                        <td>' + (feature.properties['Authors'] !== null ? autolinker.link(feature.properties['Authors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Journal</th>\
+                        <td>' + (feature.properties['Journal'] !== null ? autolinker.link(feature.properties['Journal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Theme</th>\
+                        <td>' + (feature.properties['Theme'] !== null ? autolinker.link(feature.properties['Theme'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Geotag</th>\
+                        <td>' + (feature.properties['Geotag'] !== null ? autolinker.link(feature.properties['Geotag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Search Term</th>\
+                        <td>' + (feature.properties['Search Term'] !== null ? autolinker.link(feature.properties['Search Term'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Policy_5_0() {
+            return {
+                pane: 'pane_Policy_5',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(83,215,224,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Policy_5');
+        map.getPane('pane_Policy_5').style.zIndex = 405;
+        map.getPane('pane_Policy_5').style['mix-blend-mode'] = 'normal';
+        var layer_Policy_5 = new L.geoJson(json_Policy_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Policy_5',
+            layerName: 'layer_Policy_5',
+            pane: 'pane_Policy_5',
+            onEachFeature: pop_Policy_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Policy_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Policy_5);
+        map.addLayer(layer_Policy_5);
+        function pop_Community_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Link</th>\
+                        <td>' + (feature.properties['Link'] !== null ? autolinker.link(feature.properties['Link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Digest</th>\
+                        <td>' + (feature.properties['Digest'] !== null ? autolinker.link(feature.properties['Digest'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Authors</th>\
+                        <td>' + (feature.properties['Authors'] !== null ? autolinker.link(feature.properties['Authors'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Journal</th>\
+                        <td>' + (feature.properties['Journal'] !== null ? autolinker.link(feature.properties['Journal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Theme</th>\
+                        <td>' + (feature.properties['Theme'] !== null ? autolinker.link(feature.properties['Theme'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Geotag</th>\
+                        <td>' + (feature.properties['Geotag'] !== null ? autolinker.link(feature.properties['Geotag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Search Terms</th>\
+                        <td>' + (feature.properties['Search Terms'] !== null ? autolinker.link(feature.properties['Search Terms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Community_6_0() {
+            return {
+                pane: 'pane_Community_6',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,243,61,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Community_6');
+        map.getPane('pane_Community_6').style.zIndex = 406;
+        map.getPane('pane_Community_6').style['mix-blend-mode'] = 'normal';
+        var layer_Community_6 = new L.geoJson(json_Community_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Community_6',
+            layerName: 'layer_Community_6',
+            pane: 'pane_Community_6',
+            onEachFeature: pop_Community_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Community_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Community_6);
+        map.addLayer(layer_Community_6);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Community_6.png" /> Community': layer_Community_6,'<img src="legend/Policy_5.png" /> Policy': layer_Policy_5,'<img src="legend/Practice_4.png" /> Practice': layer_Practice_4,'<img src="legend/Technical_3.png" /> Technical': layer_Technical_3,'<img src="legend/Science_2.png" /> Science': layer_Science_2,'<img src="legend/SearchLayerHidden_1.png" /> Search Layer (Hidden)': layer_SearchLayerHidden_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
